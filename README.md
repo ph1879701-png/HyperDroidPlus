@@ -1,18 +1,24 @@
-# HyperDroid Plus 0.6
+# DarkPC
 
-Projeto Android do HyperDroid Plus, um launcher/desktop inspirado no Windows 11, desenvolvido em Java + WebView.
+Desktop para Android baseado no projeto original HyperDroid Plus, com interface inspirada no Windows 11.
 
-## Estrutura
-O código-fonte e os recursos estão no arquivo `HyperDroidPlus-v0.6-GitHub.zip`, na raiz deste repositório. O workflow do GitHub Actions extrai o projeto, compila o APK de debug e publica o resultado como artefato.
+## Recursos
+- Identidade visual DarkPC, menu Iniciar, pesquisa, barra de tarefas e relógio.
+- Janelas internas que podem ser movidas, minimizadas, restauradas, maximizadas e fechadas.
+- Papel de parede com imagem estática, GIF ou vídeo, com restauração da seleção.
+- Galeria para visualizar imagens e aplicá-las como fundo.
+- Explorador de arquivos usando o seletor seguro do Android.
+- Lista de aplicativos Android instalados e abertura pelo sistema.
+- Navegador que encaminha endereços ao navegador instalado.
+- Calculadora, bloco de notas com salvamento local e reprodutor de áudio.
+- Central de controle, atalhos para configurações do Android e volume de mídia.
+- Ação para minimizar o DarkPC e voltar ao Android sem encerrar o app.
 
-## Gerar o APK
-1. Abra a aba **Actions**.
-2. Selecione **Gerar APK HyperDroid Plus**.
-3. Abra a execução mais recente.
-4. Quando terminar com sucesso, baixe o artefato **HyperDroidPlus-APK**.
-5. Extraia o ZIP do artefato e instale `app-debug.apk` no Android.
+## Limitações do Android
+- Aplicativos Android externos abrem como atividades normais do sistema e não podem ser incorporados às janelas HTML deste desktop.
+- O navegador abre os sites no navegador do aparelho.
+- Wallpapers são aplicados dentro do DarkPC, não no sistema Android.
+- O APK produzido pelo workflow é de debug para teste. O funcionamento final deve ser conferido no aparelho.
 
-Requisitos usados pelo workflow: JDK 17, Android SDK Platform 35, Build Tools 35.0.0 e Gradle 8.9.
-
-## Observação
-O APK de debug serve para testes. A compilação precisa terminar com sucesso e o aplicativo ainda deve ser testado no aparelho antes de ser considerado pronto.
+## Compilação
+Acesse **Actions → Gerar APK DarkPC**. Ao concluir com sucesso, baixe o artefato **DarkPC-APK** e extraia o arquivo app-debug.apk.

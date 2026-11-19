@@ -1,4 +1,4 @@
-name: Gerar APK HyperDroid Plus
+name: Gerar APK DarkPC
 
 on:
   workflow_dispatch:
@@ -45,13 +45,25 @@ jobs:
           PROJECT_DIR=$(dirname "$SETTINGS_FILE")
           cp -a "$PROJECT_DIR"/. .
 
-      - name: Disponibilizar codigo-fonte extraido
+      - name: Aplicar atualizacoes do DarkPC
+        run: |
+          test -s darkpc-overlay.tar.gz.b64
+          mkdir -p overlay
+          base64 -d darkpc-overlay.tar.gz.b64 | tar -xz -C overlay
+          cp -a overlay/. .
+          echo "f86bea4e9b9cd20409d2f96b4005161e5113b5f67dbf0e34dd018123364606bc  app/src/main/res/drawable-nodpi/hyperdroid_plus_icon.png" | sha256sum -c -
+
+      - name: Disponibilizar codigo-fonte DarkPC
         uses: actions/upload-artifact@v4
         with:
-          name: HyperDroidPlus-source-extracted
-          path: extracted/
+          name: DarkPC-source
+          path: |
+            app/
+            build.gradle
+            settings.gradle
+            gradle.properties
           if-no-files-found: error
-          retention-days: 7
+          retention-days: 14
 
       - name: Compilar APK
         run: gradle --no-daemon clean assembleDebug
@@ -59,7 +71,7 @@ jobs:
       - name: Salvar APK
         uses: actions/upload-artifact@v4
         with:
-          name: HyperDroidPlus-APK
+          name: DarkPC-APK
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
