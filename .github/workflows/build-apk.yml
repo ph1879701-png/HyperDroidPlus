@@ -45,6 +45,14 @@ jobs:
           PROJECT_DIR=$(dirname "$SETTINGS_FILE")
           cp -a "$PROJECT_DIR"/. .
 
+      - name: Disponibilizar codigo-fonte extraido
+        uses: actions/upload-artifact@v4
+        with:
+          name: HyperDroidPlus-source-extracted
+          path: extracted/
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Compilar APK
         run: gradle --no-daemon clean assembleDebug
 
