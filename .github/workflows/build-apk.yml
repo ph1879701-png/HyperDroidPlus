@@ -45,13 +45,14 @@ jobs:
           PROJECT_DIR=$(dirname "$SETTINGS_FILE")
           cp -a "$PROJECT_DIR"/. .
 
-      - name: Aplicar atualizacoes do DarkPC
+      - name: Aplicar atualizacoes do HyperDroid e DarkPC
         run: |
           test -s darkpc-overlay.tar.gz.b64
           mkdir -p overlay
           base64 -d darkpc-overlay.tar.gz.b64 | tar -xz -C overlay
           cp -a overlay/. .
           echo "f86bea4e9b9cd20409d2f96b4005161e5113b5f67dbf0e34dd018123364606bc  app/src/main/res/drawable-nodpi/hyperdroid_plus_icon.png" | sha256sum -c -
+          cp app/src/main/res/drawable-nodpi/hyperdroid_plus_icon.png app/src/main/assets/hyperdroid_plus_icon.png
 
       - name: Disponibilizar codigo-fonte DarkPC
         uses: actions/upload-artifact@v4
