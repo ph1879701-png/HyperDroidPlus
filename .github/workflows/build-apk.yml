@@ -1,12 +1,9 @@
-
 name: Gerar APK HyperDroid Plus
 
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
-      - master
+    branches: [main, master]
 
 permissions:
   contents: read
@@ -14,7 +11,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Baixar projeto
         uses: actions/checkout@v4
@@ -41,17 +37,12 @@ jobs:
       - name: Extrair ZIP
         run: |
           mkdir extracted
-          ZIP_FILE=$(find . -maxdepth 1 -name '*.zip' | head -n 1)
-          if [ -z "$ZIP_FILE" ]; then
-            echo "ZIP nao encontrado"
-            exit 1
-          fi
+          ZIP_FILE=$(find . -maxdepth 1 -name '*.zip' -print -quit)
+          test -n "$ZIP_FILE" || { echo "ZIP nao encontrado"; exit 1; }
           unzip -q "$ZIP_FILE" -d extracted
-          PROJECT_DIR=$(find extracted -name settings.gradle -printf '%h\\n' | head -n 1)
-          if [ -z "$PROJECT_DIR" ]; then
-            echo "Projeto nao encontrado"
-            exit 1
-          fi
+          SETTINGS_FILE=$(find extracted -name settings.gradle -print -quit)
+          test -n "$SETTINGS_FILE" || { echo "Projeto nao encontrado"; exit 1; }
+          PROJECT_DIR=$(dirname "$SETTINGS_FILE")
           cp -a "$PROJECT_DIR"/. .
 
       - name: Compilar APK
